@@ -1,0 +1,52 @@
+{
+  "info": {
+    "name": "Laboratorio 08 - Express y MongoDB Atlas",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Verificar conexión con Atlas",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/health" }
+    },
+    {
+      "name": "2. Listar usuarios",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/users" }
+    },
+    {
+      "name": "3. Crear usuario de prueba",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Usuario Demo\",\n  \"email\": \"demo.lab08@example.com\"\n}"
+        },
+        "url": "{{baseUrl}}/api/users"
+      }
+    },
+    {
+      "name": "4. Consultar usuario por ID",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/users/{{userId}}" }
+    },
+    {
+      "name": "5. Actualizar usuario",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Usuario Actualizado\",\n  \"email\": \"demo.lab08@example.com\"\n}"
+        },
+        "url": "{{baseUrl}}/api/users/{{userId}}"
+      }
+    },
+    {
+      "name": "6. Eliminar usuario",
+      "request": { "method": "DELETE", "url": "{{baseUrl}}/api/users/{{userId}}" }
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "userId", "value": "" }
+  ]
+}

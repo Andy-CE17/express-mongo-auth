@@ -1,0 +1,65 @@
+{
+  "info": {
+    "name": "Laboratorio 08 - Verificación de Atlas",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Comprobar conexión",
+      "event": [{
+        "listen": "test",
+        "script": {
+          "exec": [
+            "pm.test('API y Atlas conectados', function () {",
+            "  pm.response.to.have.status(200);",
+            "  pm.expect(pm.response.json().ok).to.eql(true);",
+            "});"
+          ],
+          "type": "text/javascript"
+        }
+      }],
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/health" }
+    },
+    {
+      "name": "Crear usuario de prueba",
+      "event": [{
+        "listen": "test",
+        "script": {
+          "exec": [
+            "pm.test('Usuario guardado en Atlas', function () {",
+            "  pm.response.to.have.status(201);",
+            "  pm.expect(pm.response.json()._id).to.be.a('string');",
+            "});"
+          ],
+          "type": "text/javascript"
+        }
+      }],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\":\"Usuario Demo Lab 08\",\"email\":\"demo.lab08@example.com\"}"
+        },
+        "url": "{{baseUrl}}/api/users"
+      }
+    },
+    {
+      "name": "Consultar usuarios guardados",
+      "event": [{
+        "listen": "test",
+        "script": {
+          "exec": [
+            "pm.test('Usuario disponible desde Atlas', function () {",
+            "  pm.response.to.have.status(200);",
+            "  pm.expect(pm.response.json().some(user => user.email === 'demo.lab08@example.com')).to.eql(true);",
+            "});"
+          ],
+          "type": "text/javascript"
+        }
+      }],
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/users" }
+    }
+  ],
+  "variable": [{ "key": "baseUrl", "value": "http://localhost:3000" }]
+}
