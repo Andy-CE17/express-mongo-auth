@@ -8,6 +8,16 @@ const app = express();
 
 app.use(cors({ origin: process.env.CORS_ORIGIN || false }));
 app.use(express.json({ limit: '32kb' }));
+app.get('/', (_req, res) => {
+  res.json({
+    ok: true,
+    service: 'API CRUD de usuarios',
+    documentation: {
+      health: '/api/health',
+      users: '/api/users',
+    },
+  });
+});
 app.get('/api/health', async (_req, res) => {
   try {
     await mongoose.connection.db.admin().ping();
